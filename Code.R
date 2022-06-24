@@ -63,4 +63,3 @@ summary(model)
 #### In other words, 68.27% of variation in "number of cases" can be explained 
 #### by the linear regression model by four variables.
 
-
