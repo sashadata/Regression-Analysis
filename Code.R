@@ -50,3 +50,7 @@ round(cor(data),2)
 #### Create a multiple linear regression model to number of cases from the rest of the
 #### explanatory variables
 
+library(MASS)
+
+model<-lm(NofCases ~., data=data)
+summary(model)
