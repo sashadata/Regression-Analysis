@@ -28,7 +28,7 @@ library(tidyverse)
 library(dplyr)
 summary(data)
 
-### The first column is id. Not useful for analysis
+### The first column is id. Not useful for analysis, will be removed
 
 data<-subset(data, select = Children:Services) 
 
@@ -47,13 +47,20 @@ pairs(data)
 
 round(cor(data),2)
 
-#### Create a multiple linear regression model to number of cases from the rest of the
-#### explanatory variables
+#### Create multiple linear regression model to number of cases from the rest of the explanatory variables
 
 library(MASS)
 
 model<-lm(NofCases ~.,data=data)
 summary(model)
 
-model1<-lm(NofCases ~ Children + Age+Score, data=data)
-summary(model1)
+#### Observations from the model:
+#### The p𝑝-value for each coefficient tells whether it’s a significant predictor 
+#### of number of cases given the other explanatory variables in the model.
+#### The p𝑝-values for children, age, services and score are significant.
+
+#### This model gives us a multiple R2 of 0.6427 and an adjusted R2of 0.6827. 
+#### In other words, 68.27% of variation in "number of cases" can be explained 
+#### by the linear regression model by four variables.
+
+
