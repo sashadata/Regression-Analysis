@@ -52,5 +52,8 @@ round(cor(data),2)
 
 library(MASS)
 
-model<-lm(NofCases ~., data=data)
+model<-lm(NofCases ~.,data=data)
 summary(model)
+
+model1<-lm(NofCases ~ Children + Age+Score, data=data)
+summary(model1)
