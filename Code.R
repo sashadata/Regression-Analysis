@@ -68,7 +68,7 @@ summary(model)
 ### Number of Cases =1.59 + 1.014*2 (Children) + 0.011*39(Age) +0.0005*50 (Services) -0.0013*165(Score)
 ### Plugging number in the formular about and aksing quesiton: 
 #### how many cases the client will open with the following characteristics 2 children in the family;
-### 39 years old, with 50 services and 165 score for the assessment
+### 39 years old, with 50 services and 165 score for the survey assessment
 ### The answer is ~ 4.
 
 
