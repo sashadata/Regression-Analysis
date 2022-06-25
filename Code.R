@@ -63,3 +63,34 @@ summary(model)
 #### In other words, 68.27% of variation in "number of cases" can be explained 
 #### by the linear regression model by four variables.
 
+#### For example, as children variable increases by 1 unit, the number of cases will 
+### decrease by 1.014
+### Number of Cases =1.59 + 1.014*2 (Children) + 0.011*39(Age) +0.0005*50 (Services) -0.0013*165(Score)
+### Plugging number in the formular about and aksing quesiton: 
+#### how many cases the client will open with the following characteristics 2 children in the family;
+### 39 years old, with 50 services and 165 score for the assessment
+### The answer is ~ 4.
+
+
+coef(model)
+summary(data$Children)
+summary(data$Age)
+
+library(leaps)
+step<-stepAIC(model, direction ="both", trace = FALSE)
+summary(step)
+
+models <- regsubsets(NofCases~., data = data, nvmax = 6, method = "seqrep")
+summary(models)
+library(caret)
+set.seed(12345)
+
+# Set up repeated k-fold cross-validation
+train.control <- trainControl(method ="cv", number = 10)
+# Train the model
+step.model <- train(NofCases ~., data = data,
+                    method = "leapBackward", 
+                    tuneGrid = data.frame(nvmax = 1:5),
+                    trControl = train.control)
+step.model$results
+step.model$bestTune
