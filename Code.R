@@ -50,7 +50,7 @@ round(cor(data),2)
 #### Create multiple linear regression model to number of cases from the rest of the explanatory variables
 
 library(MASS)
-
+options(scipen=999) 
 model<-lm(NofCases ~.,data=data)
 summary(model)
 
@@ -63,21 +63,18 @@ summary(model)
 #### In other words, 68.27% of variation in "number of cases" can be explained 
 #### by the linear regression model by four variables.
 
-#### For example, as children variable increases by 1 unit, the number of cases will 
-### decrease by 1.014
-### Number of Cases =1.59 + 1.014*2 (Children) + 0.011*39(Age) +0.0005*50 (Services) -0.0013*165(Score)
-### Plugging number in the formular about and aksing quesiton: 
-#### how many cases the client will open with the following characteristics 2 children in the family;
-### 39 years old, with 50 services and 165 score for the survey assessment
-### The answer is ~ 4.
+#### For example, as children variable increases by 1 unit, the number of cases will increase by 1.014
+### Plugging numbers in the formula to answer question: how many cases will a client open with the following characteristics 2 children in the family;
+### 39 years old, with 50 services and 165 score for the survey assessment, 90 days in program, and
+### whoes income is 20K
+### Number of Cases=1.59+ 1.014*2 (Children) + 0.011*39(Age) +0.0005*50 (Services) -0.0013*165(Score)-0.0003*90(Days)+
+### -0.000001 *20000(Income)
+### The answer is ~ 4 
 
 
-coef(model)
-summary(data$Children)
-summary(data$Age)
 
 library(leaps)
-step<-stepAIC(model, direction ="both", trace = FALSE)
+step<-stepAIC(model, direction ="both", trace=TRUE)
 summary(step)
 
 models <- regsubsets(NofCases~., data = data, nvmax = 6, method = "seqrep")
