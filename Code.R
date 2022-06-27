@@ -72,22 +72,28 @@ summary(model)
 ### The answer is ~ 4 
 
 
-
+#### Use leaps package which has tuning parameter nvmax (number of predictors to consider
+### in the model
 library(leaps)
-step<-stepAIC(model, direction ="both", trace=TRUE)
+step<-stepAIC(model, direction ="both", trace=FALSE)
 summary(step)
 
-models <- regsubsets(NofCases~., data = data, nvmax = 6, method = "seqrep")
+### As the data set contains only 5 predictors, the nvmax function will identify 5 best models 
+### The models excluded the income varaible; however, the combination of all other variables is allowed.  
+### This makes sense as income was not significant in multiple regression formular used above
+
+models <- regsubsets(NofCases~., data = data, nvmax = 5, method = "seqrep")
 summary(models)
+
 library(caret)
 set.seed(12345)
 
 # Set up repeated k-fold cross-validation
-train.control <- trainControl(method ="cv", number = 10)
+train.control <-trainControl(method ="cv", number = 10) 
 # Train the model
 step.model <- train(NofCases ~., data = data,
                     method = "leapBackward", 
-                    tuneGrid = data.frame(nvmax = 1:5),
+                    tuneGrid = data.frame(nvmax = 1:7),
                     trControl = train.control)
 step.model$results
 step.model$bestTune
