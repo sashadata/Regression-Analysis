@@ -88,12 +88,23 @@ summary(models)
 library(caret)
 set.seed(12345)
 
-# Set up repeated k-fold cross-validation
+### Using 10-fold cross-validation to estimate the average prediction error (RMSE) of each of the 5 models
 train.control <-trainControl(method ="cv", number = 10) 
-# Train the model
+
+### train the model
 step.model <- train(NofCases ~., data = data,
                     method = "leapBackward", 
-                    tuneGrid = data.frame(nvmax = 1:7),
+                    tuneGrid = data.frame(nvmax = 1:5),
                     trControl = train.control)
+
+### It can be seen that the model with 3 variables (nvmax = 3) is the one that has the lowest RMSE. 
+### This indicates that the best model is the one with nvmax = 3 variables.
+
 step.model$results
 step.model$bestTune
+
+### It can be seen that the best 3-variables model containes Children, Score, Age
+### In other words, these 3 variables are the main predictors on how many cases will be opened 
+summary(step.model$finalModel)
+
+
