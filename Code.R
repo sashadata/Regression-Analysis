@@ -79,11 +79,11 @@ library(leaps)
 step<-stepAIC(model, direction ="both", trace=FALSE)
 summary(step)
 
-### As the data set contains only 5 predictors, the nvmax function will identify 5 best models 
+### As the data set contains only 6 predictors, the nvmax function will identify 6 best models 
 ### The models excluded the income varaible; however, the combination of all other variables is allowed.  
 ### This makes sense as income was not significant in multiple regression formular used above
 
-models <- regsubsets(NofCases~., data = data, nvmax = 5, method = "seqrep")
+models <- regsubsets(NofCases~., data = data, nvmax = 6, method = "seqrep")
 summary(models)
 
 library(caret)
@@ -95,7 +95,7 @@ train.control <-trainControl(method ="cv", number = 10)
 ### train the model
 step.model <- train(NofCases ~., data = data,
                     method = "leapBackward", 
-                    tuneGrid = data.frame(nvmax = 1:5),
+                    tuneGrid = data.frame(nvmax = 1:6),
                     trControl = train.control)
 
 ### It can be seen that the model with 3 variables (nvmax = 3) is the one that has the lowest RMSE. 
