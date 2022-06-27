@@ -72,8 +72,9 @@ summary(model)
 ### The answer is ~ 4 
 
 
-#### Use leaps package which has tuning parameter nvmax (number of predictors to consider
-### in the model
+#### Usingleaps package will help us to establish the main predictors in the model
+###  This will be done using tuning parameter nvmax 
+
 library(leaps)
 step<-stepAIC(model, direction ="both", trace=FALSE)
 summary(step)
@@ -107,4 +108,5 @@ step.model$bestTune
 ### In other words, these 3 variables are the main predictors on how many cases will be opened 
 summary(step.model$finalModel)
 
+### Result: The analysis established 3 main predictors to deal with number of cases.
 
